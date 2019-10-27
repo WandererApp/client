@@ -7,9 +7,9 @@
             <div class="content">
                 <Error>U heeft het verkeerde wachtwoord ingevoerd.</Error>
                 <form action="" method="post">
-                    <TextInput type="text" placeholder="Your name" required="true"></TextInput>
-                    <TextInput type="email" placeholder="Your e-mail address" required="true"></TextInput>
-                    <TextInput type="password" placeholder="Your password" required="true"></TextInput>
+                    <TextInput type="text" v-model="formData.username" placeholder="Your name" required="true"></TextInput>
+                    <TextInput type="email" v-model="formData.email" placeholder="Your e-mail address" required="true"></TextInput>
+                    <TextInput type="password" v-model="formData.password" placeholder="Your password" required="true"></TextInput>
                     <div class="utilities">
                         <router-link to="/signin">Sign in instead?</router-link>
                         <ButtonInput id="register-button">Sign up</ButtonInput>
@@ -27,24 +27,34 @@
 
     export default {
         name: "Register",
-        components: {Error, ButtonInput, TextInput},
+        components: { Error, ButtonInput, TextInput },
+        data() {
+            return {
+                formData: {
+                    email: '',
+                    password: '',
+                    username: ''
+                }
+            }
+        },
+        methods: {
+            getFormData() {
+                return this.formData;
+            }
+        },
         mounted() {
             const button = document.querySelector('#register-button');
-            const email = document.querySelector('#username');
-            const password = document.querySelector('#password');
-            const name = document.querySelector('#name');
 
-            const data = {
-                email: email,
-                password: password,
-                name: name
-            };
+            var data = this.getFormData();
 
             button.addEventListener('click', event => {
                 event.preventDefault();
 
-                fetch('', {
+                fetch('http://localhost:3916/api/account/register', {
                     method: 'POST',
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    }),
                     body: JSON.stringify(data)
                 }).then(result => {
                     /*eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
@@ -52,7 +62,7 @@
                 });
             });
         }
-    }
+        }
 </script>
 
 <style scoped>
@@ -77,12 +87,12 @@
             border-radius: 5px;
         }
 
-        #authentication-modal > .header {
-            text-align: center;
-            color: #ffffff;
-            margin-bottom: 15px;
-            font-size: 24px;
-        }
+            #authentication-modal > .header {
+                text-align: center;
+                color: #ffffff;
+                margin-bottom: 15px;
+                font-size: 24px;
+            }
 
         .content .utilities {
             width: 100%;
@@ -91,11 +101,11 @@
             align-items: center;
         }
 
-        .content .utilities a {
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 14px;
-        }
+            .content .utilities a {
+                color: #ffffff;
+                text-decoration: none;
+                font-size: 14px;
+            }
 
         #register-button {
             margin-left: auto;
@@ -107,9 +117,9 @@
             max-width: 400px;
         }
 
-        #authentication-modal > .header {
-            font-size: 30px;
-        }
+            #authentication-modal > .header {
+                font-size: 30px;
+            }
 
         .content .utilities a {
             font-size: 16px;
