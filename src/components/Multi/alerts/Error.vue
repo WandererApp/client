@@ -20,5 +20,6 @@
         font-size: 14px;
         border-radius: 5px;
         margin-bottom: 15px;
+        display: none;
     }
 </style>
