@@ -1,7 +1,9 @@
 <template>
     <div id="authentication-container">
         <div id="authentication-modal">
-            <div class="header"></div>
+            <div class="header">
+                Welcome back
+            </div>
             <div class="content">
                 <Error>U heeft het verkeerde wachtwoord ingevoerd.</Error>
                 <form action="" method="post">
@@ -50,14 +52,16 @@
 </script>
 
 <style>
+    /* REMOVE CODE DUPLICATION WITH REGISTER PAGE */
     @media (min-width: 374px) {
         #authentication-container {
             width: 100vw;
             height: 100vh;
-            background-image: url(../../../../public/img/background.svg);
+            background-image: url(../../../../public/img/background.jpg);
             background-repeat: no-repeat;
             background-position-y: bottom;
             background-position-x: center;
+            background-size: cover;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -66,10 +70,15 @@
         #authentication-modal {
             width: 100%;
             max-width: 340px;
-            background-color: #ffffff;
             padding: 30px;
             border-radius: 5px;
-            border: 1px solid #e4e4e4;
+        }
+
+        #authentication-modal > .header {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-size: 24px;
         }
 
         .content .utilities {
@@ -80,7 +89,7 @@
         }
 
         .content .utilities a {
-            color: #707070;
+            color: #ffffff;
             text-decoration: none;
             font-size: 14px;
         }
@@ -93,6 +102,14 @@
     @media (min-width: 1023px) {
         #authentication-modal {
             max-width: 400px;
+        }
+
+        #authentication-modal > .header {
+            font-size: 30px;
+        }
+
+        .content .utilities a {
+            font-size: 16px;
         }
     }
 </style>
