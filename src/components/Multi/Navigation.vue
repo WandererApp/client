@@ -3,7 +3,7 @@
         <div class="inner">
             <img src="img/logo.svg">
             <div class="menu">
-                <img src="img/bars.svg">
+                <img src="img/bars.svg" id="bars">
             </div>
         </div>
     </header>
@@ -46,5 +46,11 @@
 
     header .inner .menu img {
         height: 32px;
+    }
+
+    @media (min-width: 1023px) {
+        #bars {
+            display: none;
+        }
     }
 </style>

@@ -37,16 +37,35 @@
                 </div>
             </div>
         </div>
-        <div class="right"></div>
+        <div class="right" id="map"></div>
     </div>
 </template>
 
 <script>
     import TextInput from "../../Multi/Input/TextInput";
+    import mapboxgl from 'mapbox-gl';
 
     export default {
         name: "Home",
-        components: {TextInput}
+        components: {TextInput},
+        data() {
+            return {
+                apiKey: '',
+            };
+        },
+        mounted() {
+            mapboxgl.accessToken = this.apiKey;
+
+            this.map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/streets-v11',
+                minzoom: 1.3,
+                center: [-74.0073, 40.7124], // Manhattan
+                zoom: 16,
+            });
+
+            this.map.addControl(new mapboxgl.Navigation());
+        }
     }
 </script>
 
@@ -55,13 +74,14 @@
         width: 100vw;
         height: 100vh;
         display: flex;
-        padding-top: 75px;
+        padding-top: 60px;
     }
 
     #home-container > .left {
         width: 100%;
         padding-left: 15px;
         padding-right: 15px;
+        padding-top: 15px;
     }
 
     #home-container > .left .search {
@@ -117,6 +137,8 @@
 
         #home-container > .right {
             width: 100%;
+            height: 100%;
+            display: block;
         }
     }
 </style>
