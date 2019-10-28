@@ -26,21 +26,33 @@
 
     export default {
         name: "Login",
-        components: {Error, ButtonInput, TextInput},
+        components: { Error, ButtonInput, TextInput },
+        data() {
+            return {
+                formData: {
+                    email: '',
+                    password: '',
+                }
+            }
+        },
+        methods: {
+            getFormData() {
+                return this.formData;
+            }
+        },
         mounted() {
             const button = document.querySelector('#login-button');
-            const email = document.querySelector('#username');
-            const password = document.querySelector('#password');
-            const data = {
-                email: email,
-                password: password
-            };
+
+            var data = this.getFormData();
 
             button.addEventListener('click', event => {
                 event.preventDefault();
 
-                fetch('', {
+                fetch('http://localhost:3916/api/account/login', {
                     method: 'POST',
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    }),
                     body: JSON.stringify(data)
                 }).then(result => {
                     /*eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
@@ -74,12 +86,12 @@
             border-radius: 5px;
         }
 
-        #authentication-modal > .header {
-            text-align: center;
-            color: #ffffff;
-            margin-bottom: 15px;
-            font-size: 24px;
-        }
+            #authentication-modal > .header {
+                text-align: center;
+                color: #ffffff;
+                margin-bottom: 15px;
+                font-size: 24px;
+            }
 
         .content .utilities {
             width: 100%;
@@ -88,11 +100,11 @@
             align-items: center;
         }
 
-        .content .utilities a {
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 14px;
-        }
+            .content .utilities a {
+                color: #ffffff;
+                text-decoration: none;
+                font-size: 14px;
+            }
 
         #login-button {
             margin-left: auto;
@@ -104,9 +116,9 @@
             max-width: 400px;
         }
 
-        #authentication-modal > .header {
-            font-size: 30px;
-        }
+            #authentication-modal > .header {
+                font-size: 30px;
+            }
 
         .content .utilities a {
             font-size: 16px;
