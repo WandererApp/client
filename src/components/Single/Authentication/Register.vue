@@ -51,9 +51,8 @@
                         username: this.formData.username,
                         password: this.formData.password
                     })
-                }).then(result => {
-                    /*eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
-                    console.log(result.json());
+                }).then(() => {
+                    this.$router.push('/signin');
                 });
             }
         }
