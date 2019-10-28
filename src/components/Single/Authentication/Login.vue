@@ -6,14 +6,12 @@
             </div>
             <div class="content">
                 <Error>U heeft het verkeerde wachtwoord ingevoerd.</Error>
-                <form action="" method="post">
-                    <TextInput type="email" v-model="formData.email" placeholder="Your e-mail address" required="true"></TextInput>
-                    <TextInput type="password" v-model="formData.password" placeholder="Your password" required="true"></TextInput>
-                    <div class="utilities">
-                        <router-link to="/">Forgot your password?</router-link>
-                        <ButtonInput id="login-button">Sign in</ButtonInput>
-                    </div>
-                </form>
+                <TextInput type="text" v-model="formData.username" placeholder="Your username" required="true"></TextInput>
+                <TextInput type="password" v-model="formData.password" placeholder="Your password" required="true"></TextInput>
+                <div class="utilities">
+                    <router-link to="/">Forgot your password?</router-link>
+                    <ButtonInput v-on:click.native="loginUser()" id="login-button">Sign in</ButtonInput>
+                </div>
             </div>
         </div>
     </div>
@@ -30,35 +28,27 @@
         data() {
             return {
                 formData: {
-                    email: '',
+                    username: '',
                     password: '',
                 }
             }
         },
         methods: {
-            getFormData() {
-                return this.formData;
-            }
-        },
-        mounted() {
-            const button = document.querySelector('#login-button');
-
-            var data = this.getFormData();
-
-            button.addEventListener('click', event => {
-                event.preventDefault();
-
+            loginUser() {
                 fetch('http://localhost:3916/api/account/login', {
                     method: 'POST',
                     headers: new Headers({
                         'Content-Type': 'application/json'
                     }),
-                    body: JSON.stringify(data)
+                    body: JSON.stringify({
+                        username: this.formData.username,
+                        password: this.formData.password
+                    })
                 }).then(result => {
                     /*eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
                     console.log(result.json());
                 });
-            });
+            }
         }
     }
 </script>
