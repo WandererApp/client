@@ -7,8 +7,8 @@
             <div class="content">
                 <Error>U heeft het verkeerde wachtwoord ingevoerd.</Error>
                 <form action="" method="post">
-                    <TextInput type="email" placeholder="Your e-mail address" required="true"></TextInput>
-                    <TextInput type="password" placeholder="Your password" required="true"></TextInput>
+                    <TextInput type="email" v-model="formData.email" placeholder="Your e-mail address" required="true"></TextInput>
+                    <TextInput type="password" v-model="formData.password" placeholder="Your password" required="true"></TextInput>
                     <div class="utilities">
                         <router-link to="/">Forgot your password?</router-link>
                         <ButtonInput id="login-button">Sign in</ButtonInput>
