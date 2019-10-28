@@ -3,6 +3,7 @@
         <div class="inner">
             <img src="img/logo.svg">
             <div class="menu">
+                <a href="#" v-if="authenticated()" v-on:click="logout()">Sign out</a>
                 <img src="img/bars.svg" id="bars">
             </div>
         </div>
@@ -11,7 +12,16 @@
 
 <script>
     export default {
-        name: "Navigation"
+        name: "Navigation",
+        methods: {
+            logout() {
+                window.localStorage.removeItem('token');
+                this.$router.push('/signin');
+            },
+            authenticated() {
+                return window.localStorage.getItem("token") !== null
+            }
+        }
     }
 </script>
 
