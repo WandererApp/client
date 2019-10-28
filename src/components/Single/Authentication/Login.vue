@@ -45,8 +45,8 @@
                         password: this.formData.password
                     })
                 }).then(result => {
-                    /*eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
-                    console.log(result.json());
+                    localStorage.setItem('token', result.Token);
+                    this.$router.push('/');
                 });
             }
         }
