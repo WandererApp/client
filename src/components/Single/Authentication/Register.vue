@@ -40,7 +40,6 @@
         },
         methods: {
             registerUser() {
-                console.log(this.formData);
                 fetch('http://localhost:3916/api/account/register', {
                     method: 'POST',
                     headers: new Headers({
