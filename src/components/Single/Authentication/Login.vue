@@ -45,8 +45,10 @@
                         password: this.formData.password
                     })
                 }).then(result => {
-                    localStorage.setItem('token', result.Token);
-                    this.$router.push('/');
+                    result.json().then(data => {
+                        window.localStorage.setItem('token', data.Token);
+                        this.$router.push('/');
+                    });
                 });
             }
         }
