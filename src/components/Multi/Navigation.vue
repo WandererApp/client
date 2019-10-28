@@ -24,6 +24,11 @@
                 this.isAuthenticated = false;
                 this.$router.push('/signin');
             }
+        },
+        watch: {
+            $route: function() {
+                this.isAuthenticated = window.localStorage.getItem('token') !== null;
+            }
         }
     }
 </script>
