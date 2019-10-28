@@ -1,5 +1,5 @@
 <template>
-    <input :type="type" :placeholder="placeholder" :required="required">
+    <input :type="type" :placeholder="placeholder" :required="required" v-on:input="updateValue($event.target.value)">
 </template>
 
 <script>
@@ -9,7 +9,12 @@
             'type',
             'placeholder',
             'required'
-        ]
+        ],
+        methods: {
+            updateValue: function (value) {
+                this.$emit('input', value)
+            }
+        }
     }
 </script>
 
