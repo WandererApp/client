@@ -5,7 +5,7 @@
                 <TextInput type="text" placeholder="Find wanderers"></TextInput>
             </div>
             <div class="timeline">
-                <div class="item">
+                <div class="item" data-id="1">
                     <div class="header">
                         <div class="left">
                             <img src="img/background.jpg">
@@ -20,7 +20,7 @@
                         Zeker een aanrader.
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" data-id="2">
                     <div class="header">
                         <div class="left">
                             <img src="img/background.jpg">
@@ -65,12 +65,58 @@
                 zoom: 16,
             });
 
-            var Draw = new MapboxDraw();
+            var Draw = new MapboxDraw({
+                displayControlsDefault: false,
+                controls: {
+                    line_string: true,
+                    trash: true
+                },
+                styles: [
+                    // ACTIVE (being drawn)
+                    // line stroke
+                    {
+                        "id": "gl-draw-line",
+                        "type": "line",
+                        "filter": ["all", ["==", "$type", "LineString"], ["!=", "mode", "static"]],
+                        "layout": {
+                            "line-cap": "round",
+                            "line-join": "round"
+                        },
+                        "paint": {
+                            "line-color": "#3b9ddd",
+                            "line-dasharray": [0.2, 2],
+                            "line-width": 4,
+                            "line-opacity": 0.7
+                        }
+                    },
+                    // vertex point halos
+                    {
+                        "id": "gl-draw-polygon-and-line-vertex-halo-active",
+                        "type": "circle",
+                        "filter": ["all", ["==", "meta", "vertex"], ["==", "$type", "Point"], ["!=", "mode", "static"]],
+                        "paint": {
+                            "circle-radius": 10,
+                            "circle-color": "#FFF"
+                        }
+                    },
+                    // vertex points
+                    {
+                        "id": "gl-draw-polygon-and-line-vertex-active",
+                        "type": "circle",
+                        "filter": ["all", ["==", "meta", "vertex"], ["==", "$type", "Point"], ["!=", "mode", "static"]],
+                        "paint": {
+                            "circle-radius": 6,
+                            "circle-color": "#3b9ddd",
+                        }
+                    },
+                ]
+            });
 
             this.map.addControl(Draw, 'top-left');
 
-            this.map.on('load', () => {
-
+            document.querySelector('.item[data-id="1"]').addEventListener('click', () => {
+                this.map.getLayer('route2') ? this.map.removeLayer('route2') : null;
+                this.map.getSource('route2') ? this.map.removeSource('route2') : null;
                 this.map.addLayer({
                     "id": "route",
                     "type": "line",
@@ -97,6 +143,39 @@
                     },
                     "paint": {
                         "line-color": "#888",
+                        "line-width": 8
+                    }
+                });
+            });
+
+            document.querySelector('.item[data-id="2"]').addEventListener('click', () => {
+                this.map.getLayer('route') ? this.map.removeLayer('route') : null;
+                this.map.getSource('route') ? this.map.removeSource('route') : null;
+                this.map.addLayer({
+                    "id": "route2",
+                    "type": "line",
+                    "source": {
+                        "type": "geojson",
+                        "data": {
+                            "type": "Feature",
+                            "properties": {},
+                            "geometry": {
+                                "type": "LineString",
+                                "coordinates": [
+                                    [4.484021, 51.917197],
+                                    [4.483846, 51.917141],
+                                    [4.483304, 51.918058],
+                                    [4.488635, 51.919233]
+                                ]
+                            }
+                        }
+                    },
+                    "layout": {
+                        "line-join": "round",
+                        "line-cap": "round"
+                    },
+                    "paint": {
+                        "line-color": "#25cfdb",
                         "line-width": 8
                     }
                 });
