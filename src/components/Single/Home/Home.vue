@@ -45,6 +45,8 @@
     import TextInput from "../../Multi/Input/TextInput";
     import mapboxgl from 'mapbox-gl';
     import MapboxDraw from '@mapbox/mapbox-gl-draw';
+    import Route from "../../Multi/Route"
+
 
     export default {
         name: "Home",
@@ -115,19 +117,19 @@
             this.map.addControl(Draw, 'top-left');
 
             document.querySelector('.item[data-id="1"]').addEventListener('click', () => {
-                this.map.getLayer('route2') ? this.map.removeLayer('route2') : null;
-                this.map.getSource('route2') ? this.map.removeSource('route2') : null;
+                this.map.getLayer('route') ? this.map.removeLayer('route') : null;
+                this.map.getSource('route') ? this.map.removeSource('route') : null;
                 this.map.addLayer({
-                    "id": "route",
-                    "type": "line",
-                    "source": {
-                        "type": "geojson",
-                        "data": {
-                            "type": "Feature",
-                            "properties": {},
-                            "geometry": {
-                                "type": "LineString",
-                                "coordinates": [
+                    id: "route",
+                    type: "line",
+                    source: {
+                        type: "geojson",
+                        data: {
+                            type: "Feature",
+                            properties: {},
+                            geometry: {
+                                type: "LineString",
+                                coordinates: [
                                     [4.484021, 51.917193],
                                     [4.487793, 51.917927],
                                     [4.487993, 51.917427],
@@ -137,22 +139,24 @@
                             }
                         }
                     },
-                    "layout": {
+                    layout: {
                         "line-join": "round",
                         "line-cap": "round"
                     },
-                    "paint": {
+                    paint: {
                         "line-color": "#888",
                         "line-width": 8
                     }
                 });
             });
 
+
+
             document.querySelector('.item[data-id="2"]').addEventListener('click', () => {
                 this.map.getLayer('route') ? this.map.removeLayer('route') : null;
                 this.map.getSource('route') ? this.map.removeSource('route') : null;
                 this.map.addLayer({
-                    "id": "route2",
+                    "id": "route",
                     "type": "line",
                     "source": {
                         "type": "geojson",
