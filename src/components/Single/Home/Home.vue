@@ -32,7 +32,7 @@
                     </div>
                     <div class="content">
                         We hebben een geweldige trip gehad naar het buitenland. <br>
-                        Zeker een aanrader.
+                        Zeker geen aanrander.
                     </div>
                 </div>
             </div>
