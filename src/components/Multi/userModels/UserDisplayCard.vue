@@ -23,7 +23,7 @@
         ],
         methods: {
             getTrips(id) {
-                fetch('http://localhost:3916/api/trips/GetTrips', {
+                fetch('http://localhost:3916/api/trip/GetTrips', {
                     method: 'POST',
                     headers: new Headers({
                         'Content-Type': 'application/json'

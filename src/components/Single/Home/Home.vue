@@ -2,7 +2,7 @@
     <div id="home-container">
         <div class="left">
             <div class="search">
-                <TextInput type="text" placeholder="Find wanderers"></TextInput>
+                <TextInput type="text" placeholder="Find wanderers" @input="getUsers"></TextInput>
             </div>
             <div class="timeline">
                 <div class="item" data-id="1">
@@ -55,6 +55,22 @@
             return {
                 apiKey: '',
             };
+        },
+        methods: {
+            getUsers() {
+                fetch('http://localhost:3916/api/account/Search', {
+                    method: 'POST',
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    }),
+                    body: JSON.stringify({
+                        filterValue: ""
+                    })
+                }).then(result => {
+                    result.json().then(data => {
+                    });
+                });
+            }
         },
         mounted() {
             mapboxgl.accessToken = this.apiKey;
