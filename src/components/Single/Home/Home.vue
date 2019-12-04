@@ -4,6 +4,7 @@
             <div class="search">
                 <TextInput type="text" placeholder="Find wanderers" @input="getUsers"></TextInput>
             </div>
+            <UserDisplayCard id="userList" class="timeline" v-for="user in users" :user="user" />
             <div class="timeline">
                 <div class="item" data-id="1">
                     <div class="header">
@@ -45,15 +46,17 @@
     import TextInput from "../../Multi/Input/TextInput";
     import mapboxgl from 'mapbox-gl';
     import MapboxDraw from '@mapbox/mapbox-gl-draw';
-    import Route from "../../Multi/Route"
+    import UserDisplayCard from "../../Multi/UserModels/UserDisplayCard"
+    import Route from "../../Multi/Route";
 
 
     export default {
         name: "Home",
-        components: { TextInput },
+        components: { TextInput, UserDisplayCard },
         data() {
             return {
-                apiKey: '',
+                users: [],
+                apiKey: ''
             };
         },
         methods: {
@@ -68,11 +71,29 @@
                     })
                 }).then(result => {
                     result.json().then(data => {
+                        for (var i = 0; i < data.length; i++) {
+                            var user = {
+                                id: data[i].Id,
+                                username: data[i].Username,
+                                profilePicture: "img/background.jpg",
+                                joined: new Date(Date.now())
+                            }
+                            //var user = new UserDisplayCard.user(
+                            //    data[i].Id,
+                            //    data[i].Username,
+                            //    "img/background.jpg",
+                            //    new Date(Date.now())
+                            //);
+                            this.users.push(user);
+                        }
                     });
                 });
             }
         },
         mounted() {
+
+            this.getUsers();
+
             mapboxgl.accessToken = this.apiKey;
 
             this.map = new mapboxgl.Map({
@@ -83,7 +104,7 @@
                 zoom: 16,
             });
 
-            var Draw = new MapboxDraw({
+            var draw = new MapboxDraw({
                 displayControlsDefault: false,
                 controls: {
                     line_string: true,
@@ -130,7 +151,7 @@
                 ]
             });
 
-            this.map.addControl(Draw, 'top-left');
+            this.map.addControl(draw, 'top-left');
 
             document.querySelector('.item[data-id="1"]').addEventListener('click', () => {
                 this.map.getLayer('route') ? this.map.removeLayer('route') : null;
@@ -164,6 +185,18 @@
                         "line-width": 8
                     }
                 });
+                this.map.addLayer({
+                    id: 'waypoints',
+                    type: 'circle',
+                    source: 'route',
+                    paint: {
+                        'circle-radius': 3,
+                        'circle-color': '#223b53',
+                        'circle-stroke-color': 'white',
+                        'circle-stroke-width': 1,
+                        'circle-opacity': 0.5
+                    }
+                })
             });
 
 
@@ -228,6 +261,7 @@
                 margin-top: 15px;
             }
 
+            /*todo: remove*/
                 #home-container > .left .timeline .item {
                     margin-bottom: 30px;
                 }
@@ -257,6 +291,7 @@
                         font-size: 14px;
                         margin-top: 10px;
                     }
+                    /*end remove*/
 
         #home-container > .right {
             display: none;
