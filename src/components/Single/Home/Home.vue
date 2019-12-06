@@ -8,7 +8,7 @@
                 <div class="item" data-id="1">
                     <div class="header">
                         <div class="left">
-                            <img src="img/background.jpg">
+                            <img src="img/background_authenticate.png">
                         </div>
                         <div class="right">
                             <h5>Kevin von Kevinson</h5>
@@ -23,7 +23,7 @@
                 <div class="item" data-id="2">
                     <div class="header">
                         <div class="left">
-                            <img src="img/background.jpg">
+                            <img src="img/background_authenticate.png">
                         </div>
                         <div class="right">
                             <h5>Kevin von Kevinson</h5>

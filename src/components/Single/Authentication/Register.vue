@@ -1,20 +1,18 @@
 <template>
     <div id="authentication-container">
+        <AuthenticationHeader />
         <div id="authentication-modal">
             <div class="header">
-                Become a wanderer
+                Become A Wanderer
             </div>
             <div class="content">
-                <Error>U heeft het verkeerde wachtwoord ingevoerd.</Error>
-                <TextInput type="text" v-model="formData.username" placeholder="Your name" required="true"></TextInput>
-                <TextInput type="email" v-model="formData.email" placeholder="Your e-mail address"
-                           required="true"></TextInput>
-                <TextInput type="password" v-model="formData.password" placeholder="Your password"
-                           required="true"></TextInput>
+                <Error>That account already exists.</Error>
+                <TextInput type="text" v-model="formData.username" placeholder="Username" required="true"></TextInput>
+                <TextInput type="email" v-model="formData.email" placeholder="Email" required="true"></TextInput>
+                <TextInput type="password" v-model="formData.password" placeholder="Password" required="true"></TextInput>
                 <div class="utilities">
-                    <router-link to="/signin">Sign in instead?</router-link>
-                    <ButtonInput v-on:click.native="registerUser()" id="register-button">Sign up</ButtonInput>
-
+                    <router-link to="/signin"><u>LOG IN</u> INSTEAD</router-link>
+                    <ButtonInput v-on:click.native="registerUser()" id="register-button">SIGN UP</ButtonInput>
                 </div>
             </div>
         </div>
@@ -25,10 +23,11 @@
     import TextInput from "../../Multi/Input/TextInput";
     import ButtonInput from "../../Multi/Input/ButtonInput";
     import Error from "../../Multi/alerts/Error";
+    import AuthenticationHeader from "../../Multi/AuthenticationHeader";
 
     export default {
         name: "Register",
-        components: {Error, ButtonInput, TextInput},
+        components: { Error, ButtonInput, TextInput, AuthenticationHeader },
         data() {
             return {
                 formData: {
@@ -63,19 +62,18 @@
         #authentication-container {
             width: 100vw;
             height: 100vh;
-            background-image: url(../../../../public/img/background.jpg);
+            background-image: url(../../../../public/img/background_authenticate.png);
             background-repeat: no-repeat;
             background-position-y: bottom;
             background-position-x: center;
             background-size: cover;
             display: flex;
             justify-content: center;
-            align-items: center;
         }
 
         #authentication-modal {
             width: 100%;
-            max-width: 340px;
+            max-width: 376px;
             padding: 30px;
             border-radius: 5px;
         }
@@ -83,13 +81,14 @@
         #authentication-modal > .header {
             text-align: center;
             color: #ffffff;
-            margin-bottom: 15px;
-            font-size: 24px;
+            margin-bottom: 34px;
+            margin-top: 220px;
+            font-size: 36px;
         }
 
         .content .utilities {
             width: 100%;
-            margin-top: 15px;
+            margin-top: 28px;
             display: flex;
             align-items: center;
         }
@@ -108,10 +107,6 @@
     @media (min-width: 1023px) {
         #authentication-modal {
             max-width: 400px;
-        }
-
-        #authentication-modal > .header {
-            font-size: 30px;
         }
 
         .content .utilities a {

@@ -1,16 +1,18 @@
 <template>
     <div id="authentication-container">
+        <AuthenticationHeader />
         <div id="authentication-modal">
             <div class="header">
-                Welcome back
+                Welcome Back
             </div>
             <div class="content">
-                <Error>U heeft het verkeerde wachtwoord ingevoerd.</Error>
-                <TextInput type="text" v-model="formData.username" placeholder="Your username" required="true"></TextInput>
-                <TextInput type="password" v-model="formData.password" placeholder="Your password" required="true"></TextInput>
+                <Error>You entered the wrong password.</Error>
+                <TextInput type="text" v-model="formData.username" placeholder="Username" required="true"></TextInput>
+                <TextInput type="password" v-model="formData.password" placeholder="Password" required="true"></TextInput>
+                <router-link to="/forgotPassword" class="forgotPassword"><u>Forgot your password?</u></router-link>
                 <div class="utilities">
-                    <router-link to="/">Forgot your password?</router-link>
-                    <ButtonInput v-on:click.native="loginUser()" id="login-button">Sign in</ButtonInput>
+                    <router-link to="/signup"><u>SIGN UP</u> INSTEAD</router-link>
+                    <ButtonInput v-on:click.native="loginUser()" id="login-button">LOG IN</ButtonInput>
                 </div>
             </div>
         </div>
@@ -21,10 +23,11 @@
     import TextInput from "../../Multi/Input/TextInput";
     import ButtonInput from "../../Multi/Input/ButtonInput";
     import Error from "../../Multi/alerts/Error";
+    import AuthenticationHeader from "../../Multi/AuthenticationHeader";
 
     export default {
         name: "Login",
-        components: { Error, ButtonInput, TextInput },
+        components: { Error, ButtonInput, TextInput, AuthenticationHeader },
         data() {
             return {
                 formData: {
@@ -61,42 +64,50 @@
         #authentication-container {
             width: 100vw;
             height: 100vh;
-            background-image: url(../../../../public/img/background.jpg);
+            background-image: url(../../../../public/img/background_authenticate.png);
             background-repeat: no-repeat;
             background-position-y: bottom;
             background-position-x: center;
             background-size: cover;
             display: flex;
             justify-content: center;
-            align-items: center;
         }
 
         #authentication-modal {
             width: 100%;
-            max-width: 340px;
+            max-width: 376px;
             padding: 30px;
             border-radius: 5px;
         }
 
-            #authentication-modal > .header {
-                text-align: center;
-                color: #ffffff;
-                margin-bottom: 15px;
-                font-size: 24px;
-            }
+        #authentication-modal > .header {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 34px;
+            margin-top: 220px;
+            font-size: 36px;
+        }
+
+        .content .forgotPassword {
+            font-size: 12px;
+            color: #ffffff;
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 4px;
+        }
 
         .content .utilities {
             width: 100%;
-            margin-top: 15px;
+            margin-top: 28px;
             display: flex;
             align-items: center;
         }
 
-            .content .utilities a {
-                color: #ffffff;
-                text-decoration: none;
-                font-size: 14px;
-            }
+        .content .utilities a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+        }
 
         #login-button {
             margin-left: auto;
@@ -107,10 +118,6 @@
         #authentication-modal {
             max-width: 400px;
         }
-
-            #authentication-modal > .header {
-                font-size: 30px;
-            }
 
         .content .utilities a {
             font-size: 16px;
