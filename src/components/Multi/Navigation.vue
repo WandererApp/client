@@ -1,9 +1,14 @@
 <template>
     <header>
         <div class="inner">
-            <img src="img/logo.svg">
+            <img src="img/logo_text.svg">
             <div class="menu">
-                <a href="#" v-if="isAuthenticated" v-on:click="logout()">Sign out</a>
+                <div id="loginMenu" v-if="!isAuthenticated">
+                    <router-link to="/signin">LOG IN</router-link>
+                    <div id="loginDivider"></div>
+                    <router-link to="/signup">SIGN UP</router-link>
+                </div>
+                <a href="#" v-if="isAuthenticated" v-on:click="logout()">LOG OUT</a>
                 <img src="img/ic_menu.svg" id="bars">
             </div>
         </div>
@@ -26,7 +31,7 @@
             }
         },
         watch: {
-            $route: function() {
+            $route: function () {
                 this.isAuthenticated = window.localStorage.getItem('token') !== null;
             }
         }
@@ -55,7 +60,6 @@
 
     header .inner img {
         height: 40px;
-        margin-top: 3px;
     }
 
     header .inner .menu {
@@ -63,7 +67,30 @@
     }
 
     header .inner .menu img {
-        height: 32px;
+        height: 24px;
+    }
+
+    header .inner .menu #loginMenu {
+        display: flex;
+        align-items: center;
+    }
+
+    header .inner .menu #loginMenu #loginDivider {
+        width: 1px;
+        height: 16px;
+        background-color: #45C879;
+
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+
+    header .inner .menu #loginMenu a {
+        color: #45C879;
+        font-weight: bold;
+        font-size: 14px;
+        text-decoration: none;
+        margin-top: 8px;
+        margin-bottom: 8px;
     }
 
     @media (min-width: 1023px) {
