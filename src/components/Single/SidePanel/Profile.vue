@@ -6,6 +6,24 @@
             <h3>Kevin von Kevinson</h3>
             <p>Joined 5 october 2017</p>
         </div>
+        <div id="menu">
+            <div class="menuButton">
+                <img src="img/ic_trip.svg"/>
+                <p>TIMELINE</p>
+            </div>
+<!--            <div class="menuButton">-->
+<!--                <img src="img/ic_friends.svg"/>-->
+<!--                <p>FRIENDS</p>-->
+<!--            </div>-->
+            <div class="menuButton">
+                <img src="img/ic_add_friend.svg"/>
+                <p>ADD TO FRIENDS</p>
+            </div>
+<!--            <div class="menuButton">-->
+<!--                <img src="img/ic_remove_friend.svg"/>-->
+<!--                <p>REMOVE FRIEND</p>-->
+<!--            </div>-->
+        </div>
     </div>
 </template>
 
@@ -52,6 +70,29 @@
 
     #container #person p {
         text-align: center;
+        font-size: 12px;
+    }
+
+    #container #menu {
+        display: flex;
+        justify-content: center;
+
+        height: 72px;
+    }
+
+    #container #menu .menuButton {
+        border-bottom: 1px #c4c4c4 solid;
+        padding-top: 18px;
+        cursor: pointer;
+
+        height: 100%;
+        width: 50%;
+
+        color: rgba(0, 0, 0, .6);
+        text-align: center;
+    }
+
+    #container #menu .menuButton p {
         font-size: 12px;
     }
 
