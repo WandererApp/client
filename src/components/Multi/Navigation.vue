@@ -4,7 +4,7 @@
             <img src="img/logo.svg">
             <div class="menu">
                 <a href="#" v-if="isAuthenticated" v-on:click="logout()">Sign out</a>
-                <img src="img/bars.svg" id="bars">
+                <img src="img/ic_menu.svg" id="bars">
             </div>
         </div>
     </header>
