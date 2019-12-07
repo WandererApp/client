@@ -2,7 +2,7 @@
     <div id="home-container">
         <div class="left">
             <div class="search">
-                <TextInput type="text" placeholder="Find wanderers"></TextInput>
+                <SearchInput type="text" placeholder="Find wanderers"></SearchInput>
             </div>
             <div class="timeline">
                 <div class="item" data-id="1">
@@ -42,13 +42,13 @@
 </template>
 
 <script>
-    import TextInput from "../../Multi/Input/TextInput";
+    import SearchInput from "../../Multi/Input/SearchInput";
     import mapboxgl from 'mapbox-gl';
     import MapboxDraw from '@mapbox/mapbox-gl-draw';
 
     export default {
         name: "Home",
-        components: { TextInput },
+        components: { SearchInput },
         data() {
             return {
                 apiKey: '',
