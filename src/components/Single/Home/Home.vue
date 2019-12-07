@@ -6,34 +6,21 @@
             </div>
             <div class="timeline">
                 <div class="item" data-id="1">
-                    <div class="header">
-                        <div class="left">
-                            <img src="img/background_authenticate.png">
-                        </div>
-                        <div class="right">
-                            <h5>Kevin von Kevinson</h5>
-                            <small>2 hours ago</small>
-                        </div>
-                    </div>
+                    <HorizontalProfileView/>
                     <div class="content">
                         We hebben een geweldige trip gehad naar het buitenland. <br>
                         Zeker een aanrader.
                     </div>
                 </div>
                 <div class="item" data-id="2">
-                    <div class="header">
-                        <div class="left">
-                            <img src="img/background_authenticate.png">
-                        </div>
-                        <div class="right">
-                            <h5>Kevin von Kevinson</h5>
-                            <small>2 hours ago</small>
-                        </div>
-                    </div>
+                    <HorizontalProfileView/>
                     <div class="content">
                         We hebben een geweldige trip gehad naar het buitenland. <br>
                         Zeker een aanrader.
                     </div>
+                </div>
+                <div class="item">
+                    <VerticalProfileView/>
                 </div>
             </div>
         </div>
@@ -45,10 +32,12 @@
     import SearchInput from "../../Multi/Input/SearchInput";
     import mapboxgl from 'mapbox-gl';
     import MapboxDraw from '@mapbox/mapbox-gl-draw';
+    import VerticalProfileView from "../../Multi/profile/VerticalProfileView"
+    import HorizontalProfileView from "../../Multi/profile/HorizontalProfileView"
 
     export default {
         name: "Home",
-        components: { SearchInput },
+        components: {HorizontalProfileView, VerticalProfileView, SearchInput },
         data() {
             return {
                 apiKey: '',
