@@ -92,7 +92,7 @@ function Geometry() {
                 _coordinates = coordinates
             }
             else {
-                throw new Error('Not an array, noob!')
+                throw new Error('Not an array, please contact an administrator.')
             }
         }
     });
