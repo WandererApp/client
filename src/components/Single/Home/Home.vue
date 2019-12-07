@@ -1,7 +1,7 @@
 <template>
     <div id="home-container">
         <div class="left">
-            <Profile/>
+            <Timeline/>
         </div>
         <div class="right" id="map"></div>
     </div>
@@ -10,11 +10,11 @@
 <script>
     import mapboxgl from 'mapbox-gl';
     import MapboxDraw from '@mapbox/mapbox-gl-draw';
-    import Profile from "../SidePanel/Profile"
+    import Timeline from "../SidePanel/Timeline"
 
     export default {
         name: "Home",
-        components: {Profile },
+        components: {Timeline },
         data() {
             return {
                 apiKey: '',
