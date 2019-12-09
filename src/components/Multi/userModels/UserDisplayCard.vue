@@ -26,13 +26,10 @@
         },
         methods: {
             getTrip(id) {
-                fetch('http://localhost:3916/api/trip/GetTrips', {
+                fetch('http://localhost:3916/api/trip/GetTrips/' + id, {
                     method: 'POST',
                     headers: new Headers({
                         'Content-Type': 'application/json'
-                    }),
-                    body: JSON.stringify({
-                        userId: id
                     })
                 }).then(result => {
                     result.json().then(data => {

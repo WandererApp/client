@@ -3,6 +3,7 @@ import App from './App.vue'
 import VueRouter from 'vue-router'
 import Login from './components/Single/Authentication/Login';
 import Register from "./components/Single/Authentication/Register";
+import ForgotPassword from "./components/Single/Authentication/ForgotPassword";
 import Home from "./components/Single/Home/Home";
 
 Vue.use(VueRouter);
@@ -10,10 +11,11 @@ Vue.config.productionTip = false;
 
 const routes = [
   { path: '/', component: Home, meta: {
-      //requiresAuth: true
+      requiresAuth: true
     }},
   { path: '/signin', component: Login },
-  { path: '/signup', component: Register}
+  { path: '/signup', component: Register},
+  { path: '/forgotPassword', component: ForgotPassword}
 ];
 
 const router = new VueRouter({
