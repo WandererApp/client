@@ -1,54 +1,20 @@
 <template>
     <div id="home-container">
         <div class="left">
-            <div class="search">
-                <TextInput type="text" placeholder="Find wanderers"></TextInput>
-            </div>
-            <div class="timeline">
-                <div class="item" data-id="1">
-                    <div class="header">
-                        <div class="left">
-                            <img src="img/background.jpg">
-                        </div>
-                        <div class="right">
-                            <h5>Kevin von Kevinson</h5>
-                            <small>2 hours ago</small>
-                        </div>
-                    </div>
-                    <div class="content">
-                        We hebben een geweldige trip gehad naar het buitenland. <br>
-                        Zeker een aanrader.
-                    </div>
-                </div>
-                <div class="item" data-id="2">
-                    <div class="header">
-                        <div class="left">
-                            <img src="img/background.jpg">
-                        </div>
-                        <div class="right">
-                            <h5>Kevin von Kevinson</h5>
-                            <small>2 hours ago</small>
-                        </div>
-                    </div>
-                    <div class="content">
-                        We hebben een geweldige trip gehad naar het buitenland. <br>
-                        Zeker een aanrader.
-                    </div>
-                </div>
-            </div>
+            <Timeline/>
         </div>
         <div class="right" id="map"></div>
     </div>
 </template>
 
 <script>
-    import TextInput from "../../Multi/Input/TextInput";
     import mapboxgl from 'mapbox-gl';
     import MapboxDraw from '@mapbox/mapbox-gl-draw';
+    import Timeline from "../SidePanel/Timeline"
 
     export default {
         name: "Home",
-        components: { TextInput },
+        components: {Timeline },
         data() {
             return {
                 apiKey: '',
@@ -61,7 +27,7 @@
                 container: 'map',
                 style: 'mapbox://styles/mapbox/streets-v11',
                 minzoom: 1.3,
-                center: [4.484021, 51.917193], // wijnhave hr
+                center: [4.484021, 51.917193], // Wijnhaven hr
                 zoom: 16,
             });
 
@@ -191,52 +157,6 @@
         display: flex;
         padding-top: 60px;
     }
-
-        #home-container > .left {
-            width: 100%;
-            padding-left: 15px;
-            padding-right: 15px;
-            padding-top: 15px;
-        }
-
-            #home-container > .left .search {
-                width: 100%;
-            }
-
-            #home-container > .left .timeline {
-                width: 100%;
-                margin-top: 15px;
-            }
-
-                #home-container > .left .timeline .item {
-                    margin-bottom: 30px;
-                }
-
-                    #home-container > .left .timeline .item .header {
-                        display: flex;
-                    }
-
-                        #home-container > .left .timeline .item .header .left {
-                            text-align: left;
-                        }
-
-                            #home-container > .left .timeline .item .header .left img {
-                                width: 50px;
-                                height: 50px;
-                                border-radius: 50%;
-                            }
-
-                        #home-container > .left .timeline .item .header .right {
-                            display: flex;
-                            justify-content: center;
-                            flex-flow: column;
-                            margin-left: 15px;
-                        }
-
-                    #home-container > .left .timeline .item .content {
-                        font-size: 14px;
-                        margin-top: 10px;
-                    }
 
         #home-container > .right {
             display: none;

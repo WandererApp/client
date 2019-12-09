@@ -16,11 +16,11 @@
 <style scoped>
     @media (min-width: 374px) {
         button {
-            width: 100px;
-            height: 40px;
-            border-radius: 5px;
-            border: 1px solid #72CF94;
-            background-image: linear-gradient(to bottom, #72CF94, #45C879);
+            width: 160px;
+            height: 36px;
+            border-radius: 200px;
+            border: none;
+            background-color: #45C879;
             color: #ffffff;
             font-size: 14px;
         }
