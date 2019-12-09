@@ -15,7 +15,7 @@
 <!--                <img src="img/ic_friends.svg"/>-->
 <!--                <p>FRIENDS</p>-->
 <!--            </div>-->
-            <div class="menuButton">
+            <div class="menuButton" v-on:click.native="followUser()">
                 <img src="img/ic_add_friend.svg"/>
                 <p>ADD TO FRIENDS</p>
             </div>
@@ -32,6 +32,24 @@
     export default {
         name: "Profile",
         components: {},
+        methods: {
+            followUser() {
+                fetch('http://localhost:3916/api/follower/PostFollowerModel', {
+                    method: 'POST',
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    }),
+                    body: JSON.stringify({
+                        followerId = 1,
+                        followedId = 2
+                    })
+                }).then(result => {
+                    result.json().then(data => {
+                        
+                    });
+                });
+            }
+        }
     }
 </script>
 
