@@ -1,7 +1,27 @@
 <template>
     <div id="home-container">
         <div class="left">
-            <Timeline/>
+            <Timeline />
+        </div><div class="createPost">
+            <!-- todo: handle item visibility on FAB click-->
+            <div class="FABItem">
+                <p>End trip</p>
+                <img src="img/ic_trip_end.svg" />
+            </div>
+
+            <div class="FABItem">
+                <p>Text</p>
+                <img src="img/ic_text.svg" />
+            </div>
+
+            <div class="FABItem">
+                <p>New trip</p>
+                <img src="img/ic_trip_start.svg" />
+            </div>
+
+            <div class="FAB">
+                <img src="img/ic_add.svg" />
+            </div>
         </div>
         <div class="right" id="map"></div>
     </div>
@@ -14,10 +34,10 @@
 
     export default {
         name: "Home",
-        components: {Timeline },
+        components: { Timeline },
         data() {
             return {
-                apiKey: ''//'pk.eyJ1IjoidHlhc3Zkc3ByZWUiLCJhIjoiY2szNGg1N3F1MTB3cDNucXVid2wzcXh2byJ9.g1WGInq9lwlIs5w6yeE6Vw'
+                apiKey: ''
             };
         },
         mounted() {
@@ -176,6 +196,49 @@
         #home-container > .right {
             display: none;
         }
+
+    .createPost {
+        position: absolute;
+        right: 16px;
+        bottom: 16px;
+        z-index:1000;
+    }
+
+        .createPost .FAB {
+            display: flex;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background-color: #45C879;
+            float: right;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        }
+
+        .createPost .FABItem {
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 12px;
+            padding-right: 8px;
+            margin-bottom: 16px;
+            color: #ffffff;
+            border-radius: 24px;
+            background-color: #45C879;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        }
+
+            .createPost .FABItem p {
+                display: inline;
+                text-align: right;
+            }
+
+            .createPost .FABItem img {
+                width: 14px;
+                height: 14px;
+                float: right;
+                margin-left: 4px;
+                margin-top: 2px;
+            }
 
     @media (min-width: 1023px) {
         #home-container > .left {

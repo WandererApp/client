@@ -84,49 +84,6 @@
                     margin-top: 10px;
                 }
 
-
-    .createPost {
-        position: absolute;
-        right: 16px;
-        bottom: 16px;
-    }
-
-        .createPost .FAB {
-            display: flex;
-            justify-content: center;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background-color: #45C879;
-            float: right;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-        }
-
-        .createPost .FABItem {
-            padding-top: 5px;
-            padding-bottom: 5px;
-            padding-left: 12px;
-            padding-right: 8px;
-            margin-bottom: 16px;
-            color: #ffffff;
-            border-radius: 24px;
-            background-color: #45C879;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-        }
-
-            .createPost .FABItem p {
-                display: inline;
-                text-align: right;
-            }
-
-            .createPost .FABItem img {
-                width: 14px;
-                height: 14px;
-                float: right;
-                margin-left: 4px;
-                margin-top: 2px;
-            }
-
     @media (min-width: 1023px) {
         #container {
             width: 400px;
