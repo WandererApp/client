@@ -34,14 +34,10 @@
         components: {},
         methods: {
             followUser() {
-                fetch('http://localhost:3916/api/follower/PostFollowerModel', {
+                fetch('http://localhost:3916/api/follower/PostFollower/' + localStorage.getItem(token) + '/' + 2, {
                     method: 'POST',
                     headers: new Headers({
                         'Content-Type': 'application/json'
-                    }),
-                    body: JSON.stringify({
-                        followerId = 1,
-                        followedId = 2
                     })
                 }).then(result => {
                     result.json().then(data => {
