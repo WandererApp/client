@@ -11,7 +11,7 @@ Vue.config.productionTip = false;
 
 const routes = [
   { path: '/', component: Home, meta: {
-      //requiresAuth: true
+      requiresAuth: true
     }},
   { path: '/signin', component: Login },
   { path: '/signup', component: Register},

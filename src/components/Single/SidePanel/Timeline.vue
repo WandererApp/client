@@ -1,56 +1,61 @@
 <template>
     <div id="container">
         <div class="search">
-            <SearchInput type="text" placeholder="Find wanderers"></SearchInput>
+            <SearchInput type="text" placeholder="Find wanderers" v-on:input="getUsers($event)"/>
         </div>
-        <div class="timeline">
-            <div class="item" data-id="1">
-                <HorizontalProfileView/>
-                <div class="content">
-                    We hebben een geweldige trip gehad naar het buitenland. <br>
-                    Zeker een aanrader.
-                </div>
-            </div>
-            <div class="item" data-id="2">
-                <HorizontalProfileView/>
-                <div class="content">
-                    We hebben een geweldige trip gehad naar het buitenland. <br>
-                    Zeker een aanrader.
-                </div>
-            </div>
-        </div>
-        <div class="createPost">
-            <!-- todo: handle item visibility on FAB click-->
-            <div class="FABItem">
-                <p>End trip</p>
-                <img src="img/ic_trip_end.svg"/>
-            </div>
-
-            <div class="FABItem">
-                <p>Text</p>
-                <img src="img/ic_text.svg"/>
-            </div>
-
-            <div class="FABItem">
-                <p>New trip</p>
-                <img src="img/ic_trip_start.svg"/>
-            </div>
-
-            <div class="FAB">
-                <img src="img/ic_add.svg"/>
-            </div>
-        </div>
+        <UserDisplayCard id="userList" class="timeline" v-for="user in users" :user="user" />
     </div>
 </template>
 
 <script>
     import SearchInput from "../../Multi/Input/SearchInput";
-    import HorizontalProfileView from "../../Multi/profile/HorizontalProfileView"
+    import HorizontalProfileView from "../../Multi/profile/HorizontalProfileView";
+    import UserDisplayCard from "../../Multi/userModels/UserDisplayCard";
 
     export default {
         name: "Timeline",
-        components: {HorizontalProfileView, SearchInput},
+        components: { HorizontalProfileView, SearchInput, UserDisplayCard },
+        data() {
+            return {
+                users: []
+            };
+        },
+        methods: {
+            getUsers: function (value) {
+                console.log(value)
+                fetch('http://localhost:3916/api/account/Search/'+ (value ? value : ''), {
+                    method: 'POST',
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    })
+                }).then(result => {
+                    result.json().then(data => {
+                        var _userList = [];
+                        for (var i = 0; i < data.length; i++) {
+                            var user = {
+                                id: data[i].Id,
+                                username: data[i].Username,
+                                profilePicture: "img/background.jpg",
+                                joined: new Date(Date.now())
+                            }
+                            //var user = new UserDisplayCard.user(
+                            //    data[i].Id,
+                            //    data[i].Username,
+                            //    "img/background.jpg",
+                            //    new Date(Date.now())
+                            //);
+                            _userList.push(user);
+                        }
+                        this.users = _userList;
+                    });
+                });
+            }
+        },
+        mounted() {
+            this.getUsers('');
+        }
     }
+
 </script>
 
 <style scoped>
@@ -61,72 +66,23 @@
         padding-top: 15px;
     }
 
-    #container .search {
-        width: 100%;
-    }
+        #container .search {
+            width: 100%;
+        }
 
-    #container .timeline {
-        width: 100%;
-        margin-top: 15px;
-    }
+        #container .timeline {
+            width: 100%;
+            margin-top: 15px;
+        }
 
-    #container .timeline .item {
-        margin-bottom: 30px;
-    }
+            #container .timeline .item {
+                margin-bottom: 30px;
+            }
 
-    #container .timeline .item .content {
-        font-size: 14px;
-        margin-top: 10px;
-    }
-
-
-    .createPost {
-        position: absolute;
-        right: 16px;
-        bottom: 16px;
-        z-index: 1000;
-    }
-
-    .createPost .FAB {
-        display: flex;
-        justify-content: center;
-
-        width: 56px;
-        height: 56px;
-        border-radius: 50%;
-        background-color: #45C879;
-        float: right;
-
-        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    }
-
-    .createPost .FABItem {
-        padding-top: 5px;
-        padding-bottom: 5px;
-        padding-left: 12px;
-        padding-right: 8px;
-        margin-bottom: 16px;
-
-        color: #ffffff;
-
-        border-radius: 24px;
-        background-color: #45C879;
-
-        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    }
-
-    .createPost .FABItem p {
-        display:inline;
-        text-align: right;
-    }
-
-    .createPost .FABItem img {
-        width: 14px;
-        height: 14px;
-        float: right;
-        margin-left: 4px;
-        margin-top: 2px;
-    }
+                #container .timeline .item .content {
+                    font-size: 14px;
+                    margin-top: 10px;
+                }
 
     @media (min-width: 1023px) {
         #container {
