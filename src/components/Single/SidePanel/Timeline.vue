@@ -22,7 +22,6 @@
         },
         methods: {
             getUsers: function (value) {
-                console.log(value)
                 fetch('http://localhost:3916/api/account/Search/'+ (value ? value : ''), {
                     method: 'POST',
                     headers: new Headers({

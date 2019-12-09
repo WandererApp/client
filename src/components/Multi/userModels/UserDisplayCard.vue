@@ -25,7 +25,8 @@
             //}
         },
         methods: {
-            getTrip(id) {
+            getTrip: function (id) {
+                var self = this;
                 fetch('http://localhost:3916/api/trip/GetTrips/' + id, {
                     method: 'POST',
                     headers: new Headers({
@@ -33,11 +34,54 @@
                     })
                 }).then(result => {
                     result.json().then(data => {
-                        console.log(data)
-                    });
+                        if (Array.isArray(data)) {
+                            data.forEach(_value => {
+                                fetch('http://localhost:3916/api/pinpoint/GetPinPoints/' + _value.Id, {
+                                    method: 'POST',
+                                    headers: new Headers({
+                                        'Content-Type': 'application/json'
+                                    })
+                                }).then(_result => {
+                                    _result.json().then(_data => {
+                                        self.$parent.$parent.map.getLayer('route') ? self.$parent.$parent.map.removeLayer('route') : null;
+                                        self.$parent.$parent.map.getSource('route') ? self.$parent.$parent.map.removeSource('route') : null;
+                                        if (Array.isArray(_data)) {
+                                            self.$parent.$parent.map.addLayer({
+                                                "id": "route",
+                                                "type": "line",
+                                                "source": {
+                                                    "type": "geojson",
+                                                    "data": {
+                                                        "type": "Feature",
+                                                        "properties": {},
+                                                        "geometry": {
+                                                            "type": "LineString",
+                                                            "coordinates": _data.map(function (pinpoint, index) { return [pinpoint.Longitude, pinpoint.Latitude] })
+                                                        }
+                                                    }
+                                                },
+                                                "layout": {
+                                                    "line-join": "round",
+                                                    "line-cap": "round"
+                                                },
+                                                "paint": {
+                                                    "line-color": genRandomColor(),
+                                                    "line-width": 8
+                                                }
+                                            });
+                                        }
+                                    })
+                                })
+                            })
+                        }
+                    })
                 });
             }
         }
+    }
+
+    function genRandomColor() {
+        return '#' + Math.floor(Math.random() * 16777215).toString(16);
     }
 </script>
 
