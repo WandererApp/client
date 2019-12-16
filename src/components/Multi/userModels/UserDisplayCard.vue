@@ -9,6 +9,9 @@
                 <small>{{user.joined}}</small>
             </div>
         </div>
+        <div class="content">
+            <button>lorem ipsum</button><button>lorem ipsum</button>
+        </div>
     </div>
 </template>
 
