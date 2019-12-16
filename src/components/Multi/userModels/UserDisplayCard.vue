@@ -1,5 +1,5 @@
 <template>
-    <div class="item" @click="getTrip(user.id)">
+    <div class="item" @click="getProfile(user.id)">
         <div class="header">
             <div class="left">
                 <img :src="user.profilePicture">
@@ -9,9 +9,9 @@
                 <small>{{user.joined}}</small>
             </div>
         </div>
-        <div class="content">
-            <button>lorem ipsum</button><button>lorem ipsum</button>
-        </div>
+        <!---<div class="content">
+        <button>lorem ipsum</button><button>lorem ipsum</button>
+    </div>-->
     </div>
 </template>
 
@@ -20,12 +20,6 @@
         name: "UserDisplayCard",
         props: {
             user: Object
-            // function (id, username, profilePicture, joined) {
-            //    this.id = id;
-            //    this.username = username;
-            //    this.profilePicture = profilePicture;
-            //    this.joined = joined;
-            //}
         },
         methods: {
             getTrip: function (id) {
@@ -79,6 +73,9 @@
                         }
                     })
                 });
+            },
+            getProfile: function(id) {
+                this.$parent.getProfile(id)
             }
         }
     }

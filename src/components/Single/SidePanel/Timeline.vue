@@ -1,12 +1,12 @@
 <template>
     <div>
-        <div id="container">
+        <div v-if="!userProfile" id="container">
             <div class="search">
                 <SearchInput type="text" placeholder="Find wanderers" v-on:input="getUsers($event)" />
             </div>
             <UserDisplayCard id="userList" class="timeline" v-for="user in users" :user="user" />
         </div>
-        <profileView  :user="userProfile" />
+        <profileView v-if="userProfile" :user="userProfile" />
     </div>
 </template>
 
@@ -21,13 +21,13 @@
         components: { HorizontalProfileView, SearchInput, UserDisplayCard, ProfileView },
         data() {
             return {
-                userProfile : null,
+                userProfile: null,
                 users: []
             };
         },
         methods: {
             search: function (value) {
-                getUsers(value).then(result => {
+                this.getUsers(value).then(result => {
                     result.json().then(data => {
                         var _userList = [];
                         for (var i = 0; i < data.length; i++) {
@@ -43,13 +43,31 @@
                     });
                 });
             },
-        getUsers: function (value) {
-            return fetch('http://localhost:3916/api/account/Search/' + (value ? value : ''), {
-                method: 'POST',
-                headers: new Headers({
-                    'Content-Type': 'application/json'
+            getUsers: function (value) {
+                return fetch('http://localhost:3916/api/account/Search/' + (value ? value : ''), {
+                    method: 'POST',
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    })
                 })
-            })
+            },
+            getProfile: function (userId) {
+                fetch('http://localhost:3916/api/account/GetUserModel/' + userId, {
+                    method: 'GET',
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    })
+                }).then(result => {
+                    result.json().then(data => {
+                        var user = {
+                            id:data.Id,
+                            username: data.Username,
+                            joined: new Date(Date.now())
+                        }
+                        this.userProfile = user;
+                    })
+                });
+            }
         },
         mounted() {
             this.search('');

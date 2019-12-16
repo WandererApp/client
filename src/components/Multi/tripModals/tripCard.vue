@@ -1,13 +1,11 @@
 <template>
-    <div class="item" @click="getTrip(user.id)">
+    <div class="item" @click="getTrip(trip.id)">
         <div class="header">
-            <div class="left">
-                <img :src="trip.profilePicture">
-            </div>
-            <div class="right">
-                <h5>{{trip.name}}</h5>
-                <small>{{trip.joined}}</small>
-            </div>
+            <h5 class="right">{{trip.name}}</h5>
+        </div>
+        <div class="content">
+            <p>{{trip.to}}</p>
+            <p>{{trip.from}}</p>
         </div>
     </div>
 </template>
@@ -18,9 +16,57 @@
         props: {
             trip: Object
         },
+        data() {
+            return {}
+        },
         methods: {
-            
+            getTrip: function (id) {
+                var self = this;
+                var mainScreen = self.$parent.$parent.$parent
+                var map = mainScreen.map;
+                fetch('http://localhost:3916/api/pinpoint/GetPinPoints/' + id, {
+                    method: 'POST',
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    })
+                }).then(result => {
+                    result.json().then(data => {
+                        mainScreen.cleanMap();
+                        if (Array.isArray(data)) {
+                            map.addLayer({
+                                "id": "trip"+(self.trip.id),
+                                "type": "line",
+                                "source": {
+                                    "type": "geojson",
+                                    "data": {
+                                        "type": "Feature",
+                                        "properties": {},
+                                        "geometry": {
+                                            "type": "LineString",
+                                            "coordinates": data.map(function (pinpoint, index) { return [pinpoint.Longitude, pinpoint.Latitude] })
+                                        }
+                                    }
+                                },
+                                "layout": {
+                                    "line-join": "round",
+                                    "line-cap": "round"
+                                },
+                                "paint": {
+                                    "line-color": genRandomColor(),
+                                    "line-width": 8
+                                }
+                            });
+                            mainScreen.routes.push("trip" + (self.trip.id));
+                        }
+                    })
+                })
+            }
         }
+    }
+    
+    function genRandomColor() {
+        return '#' + Math.floor(Math.random() * 16777215).toString(16);
+    }
 </script>
 
 <style scoped>

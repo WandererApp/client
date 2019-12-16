@@ -1,10 +1,12 @@
 <template>
     <div>
-        <img src="img/background_authenticate.png">
-        <h5>Kevin von Kevinson</h5>
-    </div>
-    <div>
-        <tripCard v-for="trip in trips" :trip="trip" />
+        <div>
+            <img src="img/background_authenticate.png">
+            <h5>{user.username}</h5>
+        </div>
+        <div>
+            <tripCard v-for="trip in trips" :trip="trip" />
+        </div>
     </div>
 </template>
 
@@ -15,7 +17,13 @@
         name: "VerticalProfileView",
         components: { tripCard },
         props: {
-            trips: []
+            user: Object
+        },
+        data() {
+            return {
+                user: Object,
+                trips: []
+            }
         },
         methods: {
             getTrip: function (id) {
@@ -47,14 +55,14 @@
             width: 68px;
         }
 
-        div img {
-            width: 68px;
-            height: 68px;
-            border-radius: 50%;
-        }
+            div img {
+                width: 68px;
+                height: 68px;
+                border-radius: 50%;
+            }
 
-        div h5 {
-            text-align: center;
-        }
+            div h5 {
+                text-align: center;
+            }
     }
 </style>
