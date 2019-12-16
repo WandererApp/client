@@ -31,11 +31,11 @@
     import mapboxgl from 'mapbox-gl';
     import MapboxDraw from '@mapbox/mapbox-gl-draw';
     import Timeline from "../SidePanel/Timeline";
-    import Login from '../../Single/Authentication/Login';
+    import createTrip from "../createTrip"
 
     export default {
         name: "Home",
-        components: { Timeline,  Login},
+        components: {Timeline, createTrip},
         data() {
             return {
                 routes: [],
@@ -51,7 +51,7 @@
                 }
             },
             openNewTripForm: function () {
-                this.$parent.setForm(Login);
+                this.$parent.setForm(createTrip);
                 this.$parent.showModal = true;
             }
         },
