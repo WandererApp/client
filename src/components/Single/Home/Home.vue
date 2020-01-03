@@ -35,7 +35,7 @@
 
     export default {
         name: "Home",
-        components: {Timeline, createTrip},
+        components: { Timeline },
         data() {
             return {
                 routes: [],
@@ -51,7 +51,7 @@
                 }
             },
             openNewTripForm: function () {
-                this.$parent.setForm(createTrip);
+                this.$parent.setForm(createTrip, 'New trip', { cords: this.draw.getAll().features[0].geometry.coordinates.map(value => { return { lat: value[0], long: value[1] } }) });
                 this.$parent.showModal = true;
             }
         },
@@ -67,7 +67,7 @@
                 zoom: 16,
             });
 
-            var draw = new MapboxDraw({
+            this.draw = new MapboxDraw({
                 displayControlsDefault: false,
                 controls: {
                     line_string: true,
@@ -114,7 +114,7 @@
                 ]
             });
 
-            this.map.addControl(draw, 'top-left');
+            this.map.addControl(this.draw, 'top-left');
         }
     }
 </script>

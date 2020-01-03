@@ -4,8 +4,8 @@
             <h5 class="right">{{trip.name}}</h5>
         </div>
         <div class="content">
-            <p>{{trip.to}}</p>
             <p>{{trip.from}}</p>
+            <p>{{trip.to}}</p>
         </div>
     </div>
 </template>
@@ -43,7 +43,7 @@
                                         "properties": {},
                                         "geometry": {
                                             "type": "LineString",
-                                            "coordinates": data.map(function (pinpoint, index) { return [pinpoint.Longitude, pinpoint.Latitude] })
+                                            "coordinates": data.map(function (pinpoint) { return [pinpoint.Longitude, pinpoint.Latitude] })
                                         }
                                     }
                                 },
