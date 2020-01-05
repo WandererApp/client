@@ -1,9 +1,12 @@
 <template>
-    <div id="container">
-        <div class="search">
-            <SearchInput type="text" placeholder="Find wanderers" v-on:input="getUsers($event)"/>
+    <div>
+        <div v-if="!userProfile" id="container">
+            <div class="search">
+                <SearchInput type="text" placeholder="Find wanderers" v-on:input="search($event)" />
+            </div>
+            <UserDisplayCard id="userList" class="timeline" v-for="user in users" :user="user" />
         </div>
-        <UserDisplayCard id="userList" class="timeline" v-for="user in users" :user="user" />
+        <profileView v-if="userProfile" :user="userProfile" />
     </div>
 </template>
 
@@ -11,23 +14,20 @@
     import SearchInput from "../../Multi/Input/SearchInput";
     import HorizontalProfileView from "../../Multi/profile/HorizontalProfileView";
     import UserDisplayCard from "../../Multi/userModels/UserDisplayCard";
+    import ProfileView from "../../Single/SidePanel/Profile";
 
     export default {
         name: "Timeline",
-        components: { HorizontalProfileView, SearchInput, UserDisplayCard },
+        components: { HorizontalProfileView, SearchInput, UserDisplayCard, ProfileView },
         data() {
             return {
+                userProfile: null,
                 users: []
             };
         },
         methods: {
-            getUsers: function (value) {
-                fetch('http://localhost:3916/api/account/Search/'+ (value ? value : ''), {
-                    method: 'POST',
-                    headers: new Headers({
-                        'Content-Type': 'application/json'
-                    })
-                }).then(result => {
+            search: function (value) {
+                this.getUsers(value).then(result => {
                     result.json().then(data => {
                         var _userList = [];
                         for (var i = 0; i < data.length; i++) {
@@ -37,21 +37,40 @@
                                 profilePicture: "img/background.jpg",
                                 joined: new Date(Date.now())
                             }
-                            //var user = new UserDisplayCard.user(
-                            //    data[i].Id,
-                            //    data[i].Username,
-                            //    "img/background.jpg",
-                            //    new Date(Date.now())
-                            //);
                             _userList.push(user);
                         }
                         this.users = _userList;
                     });
                 });
+            },
+            getUsers: function (value) {
+                return fetch('http://localhost:3916/api/account/Search/' + (value ? value : ''), {
+                    method: 'POST',
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    })
+                })
+            },
+            getProfile: function (userId) {
+                fetch('http://localhost:3916/api/account/GetUserModel/' + userId, {
+                    method: 'GET',
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    })
+                }).then(result => {
+                    result.json().then(data => {
+                        var user = {
+                            id:data.Id,
+                            username: data.Username,
+                            joined: new Date(Date.now())
+                        }
+                        this.userProfile = user;
+                    })
+                });
             }
         },
         mounted() {
-            this.getUsers('');
+            this.search('');
         }
     }
 

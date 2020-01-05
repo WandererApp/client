@@ -4,7 +4,7 @@
             <Timeline />
         </div><div class="createPost">
             <!-- todo: handle item visibility on FAB click-->
-            <div class="FABItem">
+            <!--<div class="FABItem">
                 <p>End trip</p>
                 <img src="img/ic_trip_end.svg" />
             </div>
@@ -17,9 +17,9 @@
             <div class="FABItem">
                 <p>New trip</p>
                 <img src="img/ic_trip_start.svg" />
-            </div>
+            </div>-->
 
-            <div class="FAB">
+            <div class="FAB" @click="openNewTripForm()">
                 <img src="img/ic_add.svg" />
             </div>
         </div>
@@ -30,15 +30,39 @@
 <script>
     import mapboxgl from 'mapbox-gl';
     import MapboxDraw from '@mapbox/mapbox-gl-draw';
-    import Timeline from "../SidePanel/Timeline"
+    import Timeline from "../SidePanel/Timeline";
+    import createTrip from "../createTrip"
 
     export default {
         name: "Home",
         components: { Timeline },
         data() {
             return {
+                routes: [],
                 apiKey: ''
             };
+        },
+        methods: {
+            cleanMap: function () {
+                for (var i = 0; this.routes.length > i;) {
+                    var route = this.routes.pop();
+                    this.map.getLayer(route) ? this.map.removeLayer(route) : null;
+                    this.map.getSource(route) ? this.map.removeSource(route) : null;
+                }
+            },
+            removeRoute: function (routeId) {
+                var routeI = this.routes.indexOf(routeId)
+                if (routeI >= 0) {
+                    this.map.getLayer(routeId) ? this.map.removeLayer(routeId) : null;
+                    this.map.getSource(routeId) ? this.map.removeSource(routeId) : null;
+                    this.routes.splice(routeI, 1);
+                }
+
+            },
+            openNewTripForm: function () {
+                this.$parent.setForm(createTrip, 'New trip', { cords: this.draw.getAll().features[0].geometry.coordinates.map(value => { return { lat: value[1], long: value[0] } }) });
+                this.$parent.showModal = true;
+            }
         },
         mounted() {
 
@@ -52,7 +76,7 @@
                 zoom: 16,
             });
 
-            var draw = new MapboxDraw({
+            this.draw = new MapboxDraw({
                 displayControlsDefault: false,
                 controls: {
                     line_string: true,
@@ -99,88 +123,7 @@
                 ]
             });
 
-            this.map.addControl(draw, 'top-left');
-
-            //document.querySelector('.item[data-id="1"]').addEventListener('click', () => {
-            //    this.map.getLayer('route') ? this.map.removeLayer('route') : null;
-            //    this.map.getSource('route') ? this.map.removeSource('route') : null;
-            //    this.map.addLayer({
-            //        id: "route",
-            //        type: "line",
-            //        source: {
-            //            type: "geojson",
-            //            data: {
-            //                type: "Feature",
-            //                properties: {},
-            //                geometry: {
-            //                    type: "LineString",
-            //                    coordinates: [
-            //                        [4.484021, 51.917193],
-            //                        [4.487793, 51.917927],
-            //                        [4.487993, 51.917427],
-            //                        [4.487793, 51.917927],
-            //                        [4.488975, 51.918193]
-            //                    ]
-            //                }
-            //            }
-            //        },
-            //        layout: {
-            //            "line-join": "round",
-            //            "line-cap": "round"
-            //        },
-            //        paint: {
-            //            "line-color": "#888",
-            //            "line-width": 8
-            //        }
-            //    });
-            //    this.map.addLayer({
-            //        id: 'waypoints',
-            //        type: 'circle',
-            //        source: 'route',
-            //        paint: {
-            //            'circle-radius': 3,
-            //            'circle-color': '#223b53',
-            //            'circle-stroke-color': 'white',
-            //            'circle-stroke-width': 1,
-            //            'circle-opacity': 0.5
-            //        }
-            //    })
-            //});
-
-
-
-            //document.querySelector('.item[data-id="2"]').addEventListener('click', () => {
-            //    this.map.getLayer('route') ? this.map.removeLayer('route') : null;
-            //    this.map.getSource('route') ? this.map.removeSource('route') : null;
-            //    this.map.addLayer({
-            //        "id": "route",
-            //        "type": "line",
-            //        "source": {
-            //            "type": "geojson",
-            //            "data": {
-            //                "type": "Feature",
-            //                "properties": {},
-            //                "geometry": {
-            //                    "type": "LineString",
-            //                    "coordinates": [
-            //                        [4.484021, 51.917197],
-            //                        [4.483846, 51.917141],
-            //                        [4.483304, 51.918058],
-            //                        [4.488635, 51.919233]
-            //                    ]
-            //                }
-            //            }
-            //        },
-            //        "layout": {
-            //            "line-join": "round",
-            //            "line-cap": "round"
-            //        },
-            //        "paint": {
-            //            "line-color": "#25cfdb",
-            //            "line-width": 8
-            //        }
-            //    });
-            //});
+            this.map.addControl(this.draw, 'top-left');
         }
     }
 </script>
@@ -201,7 +144,7 @@
         position: absolute;
         right: 16px;
         bottom: 16px;
-        z-index:1000;
+        z-index: 1000;
     }
 
         .createPost .FAB {
