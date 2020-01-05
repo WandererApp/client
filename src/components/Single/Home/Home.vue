@@ -4,7 +4,7 @@
             <Timeline />
         </div><div class="createPost">
             <!-- todo: handle item visibility on FAB click-->
-            <div class="FABItem">
+            <!--<div class="FABItem">
                 <p>End trip</p>
                 <img src="img/ic_trip_end.svg" />
             </div>
@@ -17,7 +17,7 @@
             <div class="FABItem">
                 <p>New trip</p>
                 <img src="img/ic_trip_start.svg" />
-            </div>
+            </div>-->
 
             <div class="FAB" @click="openNewTripForm()">
                 <img src="img/ic_add.svg" />
@@ -50,8 +50,17 @@
                     this.map.getSource(route) ? this.map.removeSource(route) : null;
                 }
             },
+            removeRoute: function (routeId) {
+                var routeI = this.routes.indexOf(routeId)
+                if (routeI >= 0) {
+                    this.map.getLayer(routeId) ? this.map.removeLayer(routeId) : null;
+                    this.map.getSource(routeId) ? this.map.removeSource(routeId) : null;
+                    this.routes.splice(routeI, 1);
+                }
+
+            },
             openNewTripForm: function () {
-                this.$parent.setForm(createTrip, 'New trip', { cords: this.draw.getAll().features[0].geometry.coordinates.map(value => { return { lat: value[0], long: value[1] } }) });
+                this.$parent.setForm(createTrip, 'New trip', { cords: this.draw.getAll().features[0].geometry.coordinates.map(value => { return { lat: value[1], long: value[0] } }) });
                 this.$parent.showModal = true;
             }
         },

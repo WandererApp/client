@@ -2,7 +2,7 @@
     <div>
         <div v-if="!userProfile" id="container">
             <div class="search">
-                <SearchInput type="text" placeholder="Find wanderers" v-on:input="getUsers($event)" />
+                <SearchInput type="text" placeholder="Find wanderers" v-on:input="search($event)" />
             </div>
             <UserDisplayCard id="userList" class="timeline" v-for="user in users" :user="user" />
         </div>

@@ -35,9 +35,12 @@
 </template>
 
 <script>
+    import Vue from 'vue'
     import TextInput from "../Multi/Input/TextInput"
     import ButtonInput from "../Multi/Input/ButtonInput"
     import Datepicker from "vuejs-datepicker";
+    import Toasted from 'vue-toasted';
+    Vue.use(Toasted, {position: 'bottom-right', duration: 1000})
 
     export default {
         name: "modal",
@@ -57,8 +60,7 @@
         },
         methods: {
             createNewTrip: function () {
-                console.log(JSON.stringify(this.formData));
-                fetch('http://localhost:3916/api/', {
+                fetch('http://localhost:3916/api/trip/posttrip/', {
                     method: 'POST',
                     headers: new Headers({
                         'Content-Type': 'application/json'
@@ -71,7 +73,7 @@
                         token: localStorage.getItem('token')
                     })
                 }).then(result => {
-
+                    this.$toasted.show("Trip succefully created!");
                 });
             },
             removePinpoint: function (index) {
@@ -183,6 +185,36 @@
 
         .inputRow label {
             display: none;
+        }
+    }
+</style>
+
+<style>
+    .vdp-datepicker input {
+        width: 100%;
+        background-color: #E8E8E8;
+        height: 56px;
+        padding-left: 16px;
+        padding-right: 16px;
+        outline: 0;
+        border: none;
+        margin-bottom: 20px;
+        font-size: 16px;
+    }
+
+        .vdp-datepicker input::placeholder {
+            color: rgba(0,0,0,.6);
+            visibility: hidden;
+        }
+
+        .vdp-datepicker input:last-of-type {
+            margin-bottom: 0;
+        }
+
+
+    @media (max-width: 767.98px) {
+        .vdp-datepicker input::placeholder {
+            visibility: visible;
         }
     }
 </style>

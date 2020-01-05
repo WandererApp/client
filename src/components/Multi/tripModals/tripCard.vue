@@ -1,5 +1,5 @@
 <template>
-    <div class="item" @click="getTrip(trip.id)">
+    <div class="item" @click="toggleTrip(trip.id)">
         <div class="header">
             <h5 class="right">{{trip.name}}</h5>
         </div>
@@ -31,7 +31,6 @@
                     })
                 }).then(result => {
                     result.json().then(data => {
-                        mainScreen.cleanMap();
                         if (Array.isArray(data)) {
                             map.addLayer({
                                 "id": "trip"+(self.trip.id),
@@ -60,6 +59,17 @@
                         }
                     })
                 })
+            },
+            toggleTrip: function (id) {
+                var self = this;
+                var mainScreen = self.$parent.$parent.$parent;
+
+                if (mainScreen.routes.indexOf('trip' + self.trip.id) >= 0) {
+                    mainScreen.removeRoute('trip' + self.trip.id);
+                }
+                else {
+                    this.getTrip(id);
+                }
             }
         }
     }
