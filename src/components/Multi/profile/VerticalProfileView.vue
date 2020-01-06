@@ -53,6 +53,7 @@
     @media (min-width: 374px) {
         div {
             width: 68px;
+            cursor: pointer;
         }
 
             div img {
