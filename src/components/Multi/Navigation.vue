@@ -84,7 +84,7 @@
         margin-right: 8px;
     }
 
-    header .inner .menu #loginMenu a {
+    header .inner .menu a {
         color: #45C879;
         font-weight: bold;
         font-size: 14px;
