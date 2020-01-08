@@ -21,6 +21,7 @@
     @media (min-width: 374px) {
         div {
             display: flex;
+            cursor: pointer;
         }
 
         div .left {
