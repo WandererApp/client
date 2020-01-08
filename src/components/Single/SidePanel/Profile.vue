@@ -2,22 +2,22 @@
     <div id="container">
 
         <div id="person">
-            <div id="profilePhoto"><img src="img/background_authenticate.png" /></div>
+            <div id="profilePhoto"><img src="img/ic_profile.svg" /></div>
             <h3>{{user.username}}</h3>
             <p>{{user.joined}}</p>
         </div>
         <div id="menu">
             <div class="menuButton" @click="toTimeline()">
-                <img src="img/ic_trip.svg" />
+                <img src="img/ic_back.svg" />
                 <p>TIMELINE</p>
             </div>
             <div class="menuButton" @click="followUser()">
                 <img src="img/ic_add_friend.svg" />
-                <p>ADD TO FRIENDS</p>
+                <p>FOLLOW</p>
             </div>
             <!--            <div class="menuButton">-->
             <!--                <img src="img/ic_remove_friend.svg"/>-->
-            <!--                <p>REMOVE FRIEND</p>-->
+            <!--                <p>UNFOLLOW</p>-->
             <!--            </div>-->
         </div>
         <div>

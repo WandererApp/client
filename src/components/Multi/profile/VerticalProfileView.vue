@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <img src="img/background_authenticate.png">
+            <img src="img/ic_profile.svg">
             <h5>{user.username}</h5>
         </div>
         <div>
@@ -53,6 +53,7 @@
     @media (min-width: 374px) {
         div {
             width: 68px;
+            cursor: pointer;
         }
 
             div img {

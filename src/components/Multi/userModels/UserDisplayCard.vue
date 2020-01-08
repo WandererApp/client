@@ -2,7 +2,7 @@
     <div class="item" @click="getProfile(user.id)">
         <div class="header">
             <div class="left">
-                <img :src="user.profilePicture">
+                <img src="img/ic_profile.svg">
             </div>
             <div class="right">
                 <h5>{{user.username}}</h5>
