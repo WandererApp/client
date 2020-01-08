@@ -4,7 +4,7 @@
         <div id="person">
             <div id="profilePhoto"><img src="img/ic_profile.svg" /></div>
             <h3>{{user.username}}</h3>
-            <p>{{user.joined}}</p>
+            <p>Joined: {{user.joined.getDate()}}-{{user.joined.getMonth()+1}}-{{user.joined.getFullYear()}}</p>
         </div>
         <div id="menu">
             <div class="menuButton" @click="toTimeline()">
@@ -92,8 +92,8 @@
                                 _trips.push({
                                     id: value.Id,
                                     name: value.TripName,
-                                    from: value.TimestampFrom,
-                                    to: value.TimestampTo
+                                    from: new Date(value.TimestampFrom),
+                                    to: new Date(value.TimestampTo)
                                 });
                             })
                             this.trips = _trips;

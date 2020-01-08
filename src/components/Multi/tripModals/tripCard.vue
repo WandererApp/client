@@ -4,8 +4,8 @@
             <h5 class="right">{{trip.name}}</h5>
         </div>
         <div class="content">
-            <p>{{trip.from}}</p>
-            <p>{{trip.to}}</p>
+            <p>From: {{trip.from.getDate()}}-{{trip.from.getMonth()+1}}-{{trip.from.getFullYear()}}</p>
+            <p>To: {{trip.to.getDate()}}-{{trip.to.getMonth()+1}}-{{trip.to.getFullYear()}}</p>
         </div>
     </div>
 </template>
