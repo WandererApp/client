@@ -52,7 +52,7 @@
                 })
             },
             getProfile: function (userId) {
-                fetch('http://localhost:3916/api/account/GetUserModel/' + userId, {
+                fetch('http://localhost:3916/api/account/GetUserModel/' + userId + '/' + localStorage.getItem('token'), {
                     method: 'GET',
                     headers: new Headers({
                         'Content-Type': 'application/json'
@@ -60,17 +60,40 @@
                 }).then(result => {
                     result.json().then(data => {
                         var user = {
-                            id:data.Id,
+                            id: data.Id,
                             username: data.Username,
-                            joined: new Date(Date.now())
+                            joined: new Date(Date.now()),
+                            isFollowing: data.IsFollowing
                         }
                         this.userProfile = user;
                     })
                 });
+            },
+            getFollowedUsers: function () {
+                fetch('http://localhost:3916/api/account/SearchFollowers/' + localStorage.getItem('token'), {
+                    method: 'POST',
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    })
+                }).then(result => {
+                    result.json().then(data => {
+                        var _userList = [];
+                        for (var i = 0; i < data.length; i++) {
+                            var user = {
+                                id: data[i].Id,
+                                username: data[i].Username,
+                                profilePicture: "img/background.jpg",
+                                joined: new Date(Date.now())
+                            }
+                            _userList.push(user);
+                        }
+                        this.users = _userList;
+                    });
+                });
             }
         },
         mounted() {
-            this.search('');
+            this.getFollowedUsers();
         }
     }
 

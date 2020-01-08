@@ -6,7 +6,7 @@
             </div>
             <div class="right">
                 <h5>{{user.username}}</h5>
-                <small>{{user.joined}}</small>
+                <small>Joined: {{user.joined.getDate()}}-{{user.joined.getMonth()+1}}-{{user.joined.getFullYear()}}</small>
             </div>
         </div>
         <!---<div class="content">

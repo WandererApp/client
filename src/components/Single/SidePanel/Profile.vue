@@ -4,21 +4,22 @@
         <div id="person">
             <div id="profilePhoto"><img src="img/ic_profile.svg" /></div>
             <h3>{{user.username}}</h3>
-            <p>{{user.joined}}</p>
+            <p>Joined: {{user.joined.getDate()}}-{{user.joined.getMonth()+1}}-{{user.joined.getFullYear()}}</p>
         </div>
         <div id="menu">
             <div class="menuButton" @click="toTimeline()">
                 <img src="img/ic_back.svg" />
                 <p>TIMELINE</p>
             </div>
-            <div class="menuButton" @click="followUser()">
+
+            <div v-if="user.isFollowing" @click="unfollowUser()" class="menuButton">
+                <img src="img/ic_remove_friend.svg" />
+                <p>UNFOLLOW</p>
+            </div>
+            <div v-else class="menuButton" @click="followUser()">
                 <img src="img/ic_add_friend.svg" />
                 <p>FOLLOW</p>
             </div>
-            <!--            <div class="menuButton">-->
-            <!--                <img src="img/ic_remove_friend.svg"/>-->
-            <!--                <p>UNFOLLOW</p>-->
-            <!--            </div>-->
         </div>
         <div>
             <tripCard v-for="trip in trips" :trip="trip" />
@@ -27,11 +28,14 @@
 </template>
 
 <script>
+    import Vue from 'vue'
     import tripCard from '../../Multi/tripModals/tripCard'
+    import Toasted from 'vue-toasted';
+    Vue.use(Toasted, { position: 'bottom-right', duration: 3000 })
 
     export default {
         name: "Profile",
-        components: {tripCard},
+        components: { tripCard },
         props: {
             user: Object
         },
@@ -42,16 +46,36 @@
             }
         },
         methods: {
-            followUser: function() {
-                fetch('http://localhost:3916/api/follower/PostFollower/' + localStorage.getItem('token') + '/' + this.user.id, {
+            followRequest: function () {
+                return fetch('http://localhost:3916/api/follower/PostFollower/' + localStorage.getItem('token') + '/' + this.user.id, {
                     method: 'POST',
                     headers: new Headers({
                         'Content-Type': 'application/json'
                     })
-                }).then(result => {
-                    result.json().then(data => {
-
-                    });
+                })
+            },
+            followUser: function () {
+                this.followRequest().then(result => {
+                    if (result.status == 200) {
+                        result.json().then(data => {
+                            this.$toasted.show("You are now following " + this.user.username);
+                            this.user.isFollowing = true;
+                        });
+                    }
+                    else {
+                        this.$toasted.show("something went wrong");
+                    }
+                });
+            },
+            unfollowUser: function () {
+                this.followRequest().then(result => {
+                    if (result.status == 204) {
+                        this.$toasted.show("You have unfollowed " + this.user.username);
+                        this.user.isFollowing = false;
+                    }
+                    else {
+                        this.$toasted.show("something went wrong");
+                    }
                 });
             },
             getTrip: function (id) {
@@ -66,10 +90,10 @@
                         if (Array.isArray(data)) {
                             data.forEach(value => {
                                 _trips.push({
-                                    id : value.Id,
+                                    id: value.Id,
                                     name: value.TripName,
-                                    from: value.TimestampFrom,
-                                    to: value.TimestampTo
+                                    from: new Date(value.TimestampFrom),
+                                    to: new Date(value.TimestampTo)
                                 });
                             })
                             this.trips = _trips;
